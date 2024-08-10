@@ -1,21 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
-GRAPH_TITLE = 'f(z) = z^2 -z -1'
-X_GRID_START = -10
-X_GRID_STOP = 10
-X_GRID_STEP = .5
-Y_GRID_START = -10
-Y_GRID_STOP = 10
-Y_GRID_STEP = .5
-LINSPACE_PARAMETER_SIZE = 200
-IS_THE_IDENTITY_GRID_SHOWN = True
-ARE_THE_REAL_CURVES_SHOWN = True
-ARE_THE_IMAGINARY_CURVES_SHOWN = True
-ALPHA_VALUE = 0.75
+from inputvalues import *
 
 
 def complex_function_formula(z):
-    return (z**2 -z -1)
+    return (z**2)
     
     
 def point_parametrization(x, y):
@@ -29,14 +18,15 @@ def grid_list_maker(start, stop, step):
     return grid_list_values
     
 
-def plot_a_2d_curve_given_the_parametrization(x_inputlist, y_inputlist,
+def plot_a_2d_curve_given_the_parametrization(x_input, y_input,
 plot_color, plot_alpha):
     x_axis, y_axis = [], []
-    for x in x_inputlist:
-        for y in y_inputlist:
+    for x in x_input:
+        for y in y_input:
             parametrized_point = point_parametrization(x, y)
             x_axis.append(parametrized_point[0])
             y_axis.append(parametrized_point[1])
+    x_axis, y_axis = np.array(x_axis), np.array(y_axis)
     plt.plot(x_axis, y_axis, color = plot_color, alpha = plot_alpha)
 
     
@@ -49,14 +39,14 @@ sample_size, alpha_value):
     t_start, t_stop = y_grid_list[0], y_grid_list[-1]
     t = np.linspace(t_start, t_stop, sample_size)
     
-    x_temp = np.ones(len(t)) * x_grid_list[0]
+    x_temp = np.ones(sample_size) * x_grid_list[0]
     plot_a_2d_curve_given_the_parametrization(x_temp, t,  'blue',
     alpha_value)
     for x_value in x_grid_list[1:-1]:
-        x_temp = np.ones(len(t)) * x_value
+        x_temp = np.ones(sample_size) * x_value
         plot_a_2d_curve_given_the_parametrization(x_temp, t, 'skyblue',
         alpha_value)
-    x_temp = np.ones(len(t)) * x_grid_list[-1]
+    x_temp = np.ones(sample_size) * x_grid_list[-1]
     plot_a_2d_curve_given_the_parametrization(x_temp, t, 'lime',
     alpha_value)
     
@@ -67,14 +57,14 @@ sample_size, alpha_value):
     t_start, t_stop = x_grid_list[0], x_grid_list[-1]
     t = np.linspace(t_start, t_stop, sample_size)   
     
-    y_temp = np.ones(len(t)) * y_grid_list[0]
+    y_temp = np.ones(sample_size) * y_grid_list[0]
     plot_a_2d_curve_given_the_parametrization(t, y_temp, 'red',
     alpha_value)  
     for y_value in y_grid_list[1:-1]:
-        y_temp = np.ones(len(t)) * y_value
+        y_temp = np.ones(sample_size) * y_value
         plot_a_2d_curve_given_the_parametrization(t, y_temp, 'coral',
         alpha_value)
-    y_temp = np.ones(len(t)) * y_grid_list[-1]
+    y_temp = np.ones(sample_size) * y_grid_list[-1]
     plot_a_2d_curve_given_the_parametrization(t, y_temp, 'magenta',
     alpha_value)
 
