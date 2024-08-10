@@ -79,7 +79,8 @@ sample_size, alpha_value):
     alpha_value)
 
 
-def plot_the_transformed_curves(x_grid_list, y_grid_list, linspace_parameter_size, alpha_value):
+def plot_the_transformed_curves(x_grid_list, y_grid_list,
+linspace_parameter_size, alpha_value):
     ax = plt.axes()
     ax.set_facecolor("linen")
     plt.title(GRAPH_TITLE)
