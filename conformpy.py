@@ -44,8 +44,8 @@ plot_color, plot_alpha):
 # the same grid above and then transforms it following the parametrization 
 # rule that corresponds to the chosen complex function to be represented.
 # First, the real grid lines, the x ones
-def making_the_transformed_real_curves(x_grid_list, y_grid_list, sample_size,
-alpha_value):
+def making_the_transformed_real_curves(x_grid_list, y_grid_list, 
+sample_size, alpha_value):
     t_start, t_stop = y_grid_list[0], y_grid_list[-1]
     t = np.linspace(t_start, t_stop, sample_size)
     
@@ -98,7 +98,8 @@ linspace_parameter_size, alpha_value):
 # in order to have a reference for the conformal maps' transformation;
 # last lines and first lines are outside the for cycle in order to let
 # the user set different colors for them, as to identify them
-def making_the_identity_grid(x_grid_list_values, y_grid_list_values, alpha_value):
+def making_the_identity_grid(x_grid_list_values,
+y_grid_list_values, alpha_value):
     x_minimum, x_maximum = x_grid_list_values[0], x_grid_list_values[-1]
     y_minimum, y_maximum = y_grid_list_values[0], y_grid_list_values[-1]
     
