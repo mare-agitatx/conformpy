@@ -3,7 +3,25 @@ import numpy as np
 from inputvalues import *
     
     
-def parametrization(x_seq, y_seq):
+def is_iterable(something):
+    try:
+        iter(something)
+        return True
+    except TypeError:
+        return False
+
+
+def make_me_iterable(something):
+    if is_iterable(something) is True:
+        return something
+    else:
+        list_out = []
+        list_out.append(something)
+        return list_out
+
+
+def parametrization(x, y):
+    x_seq, y_seq = make_me_iterable(x), make_me_iterable(y)
     real_out, imag_out = [], []
     
     for x in x_seq:
@@ -56,17 +74,19 @@ render_sample_size, alpha_value):
     t_start, t_stop = y_grid_list[0], y_grid_list[-1]
     t = np.linspace(t_start, t_stop, render_sample_size)
     
-    x_temp = np.ones(render_sample_size) * x_grid_list[0]
+    x_temp = x_grid_list[0]
     plot_a_2d_curve_given_the_parametrization(x_temp, t, 'blue',
     alpha_value)
     for x_value in x_grid_list[1:-1]:
-        x_temp = np.ones(render_sample_size) * x_value
+        x_temp = x_value
         plot_a_2d_curve_given_the_parametrization(x_temp, t, 'skyblue',
         alpha_value)
-    x_temp = np.ones(render_sample_size) * x_grid_list[-1]
+    x_temp = x_grid_list[-1]
     plot_a_2d_curve_given_the_parametrization(x_temp, t, 'lime',
     alpha_value)
-   
+# TROVATO IL BUG!!!!!!!!!!! sta qui, se utilizzo l'array temporaneo
+# come faccio sopra per le y per qualche ragione il codice impazzisce
+# e aggiunge curve che non ci sono...   
 
 def plot_the_transformed_curves(x_grid_list, y_grid_list,
 render_sample_size, alpha_value):
