@@ -1,16 +1,19 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from inputvalues import *
-
-
-def complex_function_formula(z):
-    return (z**2)
     
     
-def point_parametrization(x, y):
-    z = complex(x, y)
-    w = complex_function_formula(z)
-    return w.real, w.imag
+def parametrization(x_seq, y_seq):
+    real_out, imag_out = [], []
+    
+    for x in x_seq:
+        for y in y_seq:
+            z = complex(x, y)
+            w = complex_function_formula(z)
+            real_out.append(w.real)
+            imag_out.append(w.imag)
+            
+    return [np.array(real_out), np.array(imag_out)]
 
     
 def grid_list_maker(start, stop, step):
@@ -18,16 +21,12 @@ def grid_list_maker(start, stop, step):
     return grid_list_values
     
 
-def plot_a_2d_curve_given_the_parametrization(x_input, y_input,
+def plot_a_2d_curve_given_the_parametrization(x_seq, y_seq,
 plot_color, plot_alpha):
-    x_axis, y_axis = [], []
-    for x in x_input:
-        for y in y_input:
-            parametrized_point = point_parametrization(x, y)
-            x_axis.append(parametrized_point[0])
-            y_axis.append(parametrized_point[1])
-    x_axis, y_axis = np.array(x_axis), np.array(y_axis)
-    plt.plot(x_axis, y_axis, color = plot_color, alpha = plot_alpha)
+    curve = parametrization(x_seq, y_seq)
+    real_values = curve[0]
+    imag_values = curve[1]
+    plt.plot(real_values, imag_values, color = plot_color, alpha = plot_alpha)
 
     
 # the 2 following functions generate the parametrized lines starting from  
@@ -35,42 +34,42 @@ plot_color, plot_alpha):
 # rule that corresponds to the chosen complex function to be represented.
 # First, the real grid lines, the x ones
 def making_the_transformed_real_curves(x_grid_list, y_grid_list,
-sample_size, alpha_value):
+render_sample_size, alpha_value):
     t_start, t_stop = x_grid_list[0], x_grid_list[-1]
-    t = np.linspace(t_start, t_stop, sample_size)   
+    t = np.linspace(t_start, t_stop, render_sample_size)   
     
-    y_temp = np.ones(sample_size) * y_grid_list[0]
+    y_temp = np.ones(render_sample_size) * y_grid_list[0]
     plot_a_2d_curve_given_the_parametrization(t, y_temp, 'red',
     alpha_value)  
     for y_value in y_grid_list[1:-1]:
-        y_temp = np.ones(sample_size) * y_value
+        y_temp = np.ones(render_sample_size) * y_value
         plot_a_2d_curve_given_the_parametrization(t, y_temp, 'coral',
         alpha_value)
-    y_temp = np.ones(sample_size) * y_grid_list[-1]
+    y_temp = np.ones(render_sample_size) * y_grid_list[-1]
     plot_a_2d_curve_given_the_parametrization(t, y_temp, 'magenta',
     alpha_value)
     
     
 # and now for the y ones, the imaginary lines 
 def making_the_transformed_imaginary_curves(x_grid_list, y_grid_list, 
-sample_size, alpha_value):
+render_sample_size, alpha_value):
     t_start, t_stop = y_grid_list[0], y_grid_list[-1]
-    t = np.linspace(t_start, t_stop, sample_size)
+    t = np.linspace(t_start, t_stop, render_sample_size)
     
-    x_temp = np.ones(sample_size) * x_grid_list[0]
-    plot_a_2d_curve_given_the_parametrization(x_temp, t,  'blue',
+    x_temp = np.ones(render_sample_size) * x_grid_list[0]
+    plot_a_2d_curve_given_the_parametrization(x_temp, t, 'blue',
     alpha_value)
     for x_value in x_grid_list[1:-1]:
-        x_temp = np.ones(sample_size) * x_value
+        x_temp = np.ones(render_sample_size) * x_value
         plot_a_2d_curve_given_the_parametrization(x_temp, t, 'skyblue',
         alpha_value)
-    x_temp = np.ones(sample_size) * x_grid_list[-1]
+    x_temp = np.ones(render_sample_size) * x_grid_list[-1]
     plot_a_2d_curve_given_the_parametrization(x_temp, t, 'lime',
     alpha_value)
    
 
 def plot_the_transformed_curves(x_grid_list, y_grid_list,
-linspace_parameter_size, alpha_value):
+render_sample_size, alpha_value):
     ax = plt.axes()
     ax.set_facecolor("linen")
     plt.title(GRAPH_TITLE)
@@ -78,10 +77,10 @@ linspace_parameter_size, alpha_value):
     plt.xlabel('Re(z)')
     if ARE_THE_REAL_CURVES_SHOWN is True:
         making_the_transformed_real_curves(x_grid_list, y_grid_list,
-        linspace_parameter_size, alpha_value)
+        render_sample_size, alpha_value)
     if ARE_THE_IMAGINARY_CURVES_SHOWN is True:
         making_the_transformed_imaginary_curves(x_grid_list, y_grid_list,
-        linspace_parameter_size, alpha_value)
+        render_sample_size, alpha_value)
 
 
 # plotting the cartesian grid that is fed as input for the transformed curves, 
@@ -125,7 +124,7 @@ if __name__ == "__main__":
     y_grid_list = grid_list_maker(Y_GRID_START, Y_GRID_STOP, Y_GRID_STEP)
     plt.figure(1)
     plot_the_transformed_curves(x_grid_list, y_grid_list,
-    LINSPACE_PARAMETER_SIZE, ALPHA_VALUE)
+    RENDER_SAMPLE_SIZE, ALPHA_VALUE)
 
     if IS_THE_IDENTITY_GRID_SHOWN is True:
         plt.figure(2)
