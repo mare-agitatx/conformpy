@@ -34,25 +34,7 @@ plot_color, plot_alpha):
 # the same grid above and then transforms it following the parametrization 
 # rule that corresponds to the chosen complex function to be represented.
 # First, the real grid lines, the x ones
-def making_the_transformed_real_curves(x_grid_list, y_grid_list, 
-sample_size, alpha_value):
-    t_start, t_stop = y_grid_list[0], y_grid_list[-1]
-    t = np.linspace(t_start, t_stop, sample_size)
-    
-    x_temp = np.ones(sample_size) * x_grid_list[0]
-    plot_a_2d_curve_given_the_parametrization(x_temp, t,  'blue',
-    alpha_value)
-    for x_value in x_grid_list[1:-1]:
-        x_temp = np.ones(sample_size) * x_value
-        plot_a_2d_curve_given_the_parametrization(x_temp, t, 'skyblue',
-        alpha_value)
-    x_temp = np.ones(sample_size) * x_grid_list[-1]
-    plot_a_2d_curve_given_the_parametrization(x_temp, t, 'lime',
-    alpha_value)
-    
-    
-# and now for the y ones, the imaginary lines    
-def making_the_transformed_imaginary_curves(x_grid_list, y_grid_list,
+def making_the_transformed_real_curves(x_grid_list, y_grid_list,
 sample_size, alpha_value):
     t_start, t_stop = x_grid_list[0], x_grid_list[-1]
     t = np.linspace(t_start, t_stop, sample_size)   
@@ -67,7 +49,25 @@ sample_size, alpha_value):
     y_temp = np.ones(sample_size) * y_grid_list[-1]
     plot_a_2d_curve_given_the_parametrization(t, y_temp, 'magenta',
     alpha_value)
-
+    
+    
+# and now for the y ones, the imaginary lines 
+def making_the_transformed_imaginary_curves(x_grid_list, y_grid_list, 
+sample_size, alpha_value):
+    t_start, t_stop = y_grid_list[0], y_grid_list[-1]
+    t = np.linspace(t_start, t_stop, sample_size)
+    
+    x_temp = np.ones(sample_size) * x_grid_list[0]
+    plot_a_2d_curve_given_the_parametrization(x_temp, t,  'blue',
+    alpha_value)
+    for x_value in x_grid_list[1:-1]:
+        x_temp = np.ones(sample_size) * x_value
+        plot_a_2d_curve_given_the_parametrization(x_temp, t, 'skyblue',
+        alpha_value)
+    x_temp = np.ones(sample_size) * x_grid_list[-1]
+    plot_a_2d_curve_given_the_parametrization(x_temp, t, 'lime',
+    alpha_value)
+   
 
 def plot_the_transformed_curves(x_grid_list, y_grid_list,
 linspace_parameter_size, alpha_value):
