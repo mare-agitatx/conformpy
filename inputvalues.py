@@ -1,4 +1,4 @@
-GRAPH_TITLE = 'f(z) = 1/(z+1)'
+GRAPH_TITLE = 'f(z) = z**3'
 X_GRID_START = -10.
 X_GRID_STOP = 10.
 X_GRID_STEP = 1.
@@ -13,4 +13,4 @@ ALPHA_VALUE = 0.75
 
 
 def complex_function_formula(z):
-    return (1/(z+1))
+    return (z**3)

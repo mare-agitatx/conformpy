@@ -1,17 +1,17 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from collections.abc import Iterable
 from inputvalues import *
-    
+
     
 def is_iterable(something):
-    try:
-        iter(something)
+    if isinstance(something, Iterable) is True:
         return True
-    except TypeError:
+    else:
         return False
 
 
-def make_me_iterable(something):
+def make_me_a_list(something):
     if is_iterable(something) is True:
         return something
     else:
@@ -21,7 +21,7 @@ def make_me_iterable(something):
 
 
 def parametrization(x, y):
-    x_seq, y_seq = make_me_iterable(x), make_me_iterable(y)
+    x_seq, y_seq = make_me_a_list(x), make_me_a_list(y)
     real_out, imag_out = [], []
     
     for x in x_seq:
@@ -31,7 +31,7 @@ def parametrization(x, y):
             real_out.append(w.real)
             imag_out.append(w.imag)
             
-    return [np.array(real_out), np.array(imag_out)]
+    return real_out, imag_out
 
     
 def grid_list_maker(start, stop, step):
