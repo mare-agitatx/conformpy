@@ -4,34 +4,22 @@ from collections.abc import Iterable
 from inputvalues import *
 
     
-def is_iterable(something):
-    if isinstance(something, Iterable) is True:
-        return True
-    else:
-        return False
+def merge_into_a_list_of_tuples(list1, list2):
+    merged_list = tuple(zip(list1, list2))
+    return merged_list
 
 
-def make_me_a_list(something):
-    if is_iterable(something) is True:
-        return something
-    else:
-        list_out = []
-        list_out.append(something)
-        return list_out
-
-
-def parametrization(x, y):
-    x_seq, y_seq = make_me_a_list(x), make_me_a_list(y)
-    real_out, imag_out = [], []
+def parametrization(x_sequence, y_sequence):
+    real_sequence, imag_sequence = [], []
+    list_of_tuples = merge_into_a_list_of_tuples(x_sequence, y_sequence)
     
-    for x in x_seq:
-        for y in y_seq:
-            z = complex(x, y)
+    for x_val, y_val in list_of_tuples:
+            z = complex(x_val, y_val)
             w = complex_function_formula(z)
-            real_out.append(w.real)
-            imag_out.append(w.imag)
+            real_sequence.append(w.real)
+            imag_sequence.append(w.imag)
             
-    return real_out, imag_out
+    return (real_sequence, imag_sequence)
 
     
 def grid_list_maker(start, stop, step):
@@ -39,9 +27,9 @@ def grid_list_maker(start, stop, step):
     return grid_list_values
     
 
-def plot_a_2d_curve_given_the_parametrization(x_seq, y_seq,
+def plot_a_2d_curve_given_the_parametrization(x_sequence, y_sequence,
 plot_color, plot_alpha):
-    curve = parametrization(x_seq, y_seq)
+    curve = parametrization(x_sequence, y_sequence)
     real_values = curve[0]
     imag_values = curve[1]
     plt.plot(real_values, imag_values, color = plot_color, alpha = plot_alpha)
@@ -74,19 +62,28 @@ render_sample_size, alpha_value):
     t_start, t_stop = y_grid_list[0], y_grid_list[-1]
     t = np.linspace(t_start, t_stop, render_sample_size)
     
-    x_temp = x_grid_list[0]
+    x_temp = np.ones(render_sample_size) * x_grid_list[0]
     plot_a_2d_curve_given_the_parametrization(x_temp, t, 'blue',
     alpha_value)
     for x_value in x_grid_list[1:-1]:
-        x_temp = x_value
+        x_temp = np.ones(render_sample_size) * x_value
         plot_a_2d_curve_given_the_parametrization(x_temp, t, 'skyblue',
         alpha_value)
-    x_temp = x_grid_list[-1]
+    x_temp = np.ones(render_sample_size) * x_grid_list[-1]
     plot_a_2d_curve_given_the_parametrization(x_temp, t, 'lime',
     alpha_value)
 # TROVATO IL BUG!!!!!!!!!!! sta qui, se utilizzo l'array temporaneo
 # come faccio sopra per le y per qualche ragione il codice impazzisce
-# e aggiunge curve che non ci sono...   
+# e aggiunge curve che non ci sono...
+# adesso ho pure capito in cosa consisteva il bug: nella funzione
+# parametrization() i due cicli for chiamavano i valori troppe volte
+# e se fornivo gli array di valori costanti nelle y allora il bug si 
+# verificava... ci sarà qualche convenzione in plot di pyplot che
+# impedisce il verificarsi sulle x ma non lo previene sulle y, qualche
+# roba che abbia a che fare con le funzioni matematiche? chissà
+# in ogni caso il bug c'era, semplicemente qualche altro meccanismo nelle x
+# lo preveniva e nelle y no, ma quei due cicli for contavano male in ogni caso
+
 
 def plot_the_transformed_curves(x_grid_list, y_grid_list,
 render_sample_size, alpha_value):
