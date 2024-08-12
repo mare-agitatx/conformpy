@@ -1,20 +1,24 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import inputvalues as IV
+import pytest
 
 
-def merge_into_a_list_of_tuples(list1, list2):
-    merged_list = tuple(zip(list1, list2))
+def merge_lists_into_a_list_of_tuples(list1, list2):
+    merged_list = list(zip(list1, list2))
     return merged_list
 
 
-def parametrization(x_sequence, y_sequence):
+def parametrization(x_sequence, y_sequence, complex_formula):
+    '''
+    '''
+
     real_sequence, imag_sequence = [], []
-    list_of_tuples = merge_into_a_list_of_tuples(x_sequence, y_sequence)
+    list_of_tuples = merge_lists_into_a_list_of_tuples(x_sequence, y_sequence)
 
     for x_val, y_val in list_of_tuples:
         z = complex(x_val, y_val)
-        w = IV.complex_function_formula(z)
+        w = complex_formula(z)
         real_sequence.append(w.real)
         imag_sequence.append(w.imag)
 
@@ -28,7 +32,11 @@ def grid_list_maker(start, stop, step):
 
 def plot_a_2d_curve_given_the_parametrization(x_sequence, y_sequence,
 plot_color, plot_alpha):
-    curve = parametrization(x_sequence, y_sequence)
+    '''
+    '''
+    
+    curve = parametrization(x_sequence, y_sequence,
+    IV.complex_function_formula)
     real_values = curve[0]
     imag_values = curve[1]
     plt.plot(real_values, imag_values, color = plot_color, alpha = plot_alpha)
@@ -80,6 +88,9 @@ render_sample_size, alpha_value):
 # last lines and first lines are outside the for cycle in order to let
 # the user set different colors for them, as to identify them
 def making_the_identity_grid(x_grid, y_grid, alpha_value):
+    '''
+    '''
+    
     x_minimum, x_maximum = x_grid[0], x_grid[-1]
     y_minimum, y_maximum = y_grid[0], y_grid[-1]
 
@@ -139,3 +150,59 @@ if __name__ == "__main__":
         plot_the_identity_grid(x_grid_list, y_grid_list, IV.ALPHA_VALUE)
 
     plt.show()
+    
+###############################################################################
+def test_merge_lists_into_a_list_of_tuples():
+    list1, list2 = [1, 2, 3], [4, 5, 6]
+    tuples_list = [(1, 4), (2, 5), (3, 6)]
+    assert merge_lists_into_a_list_of_tuples(list1, list2) == tuples_list
+
+
+def test_parametrization():
+    x_list, y_list = [.1, 10.9], [.2, 20.8]
+    xy_points = merge_lists_into_a_list_of_tuples(x_list, y_list)
+    z = [complex(.1, .2), complex(10.9, 20.8)]
+    reals, imags = [], []
+
+    for point in xy_points:
+        x, y = point[0], point[1]
+        reals.append(x**2 - y**2)
+        imags.append(2*x*y)
+ 
+    def complex_formula(z):
+        return z**2
+
+    expected = [reals, imags]
+    observed = parametrization(x_list, y_list, complex_formula)
+    assert expected[1][1] == pytest.approx(observed[1][1])
+    assert expected[0][1] == pytest.approx(observed[0][1])
+
+
+#def test_grid_list_maker():
+    
+
+
+#def test_plot_a_2d_curve_given_the_parametrization()
+    
+
+
+#def test_making_the_transformed_real_curves()
+    
+
+
+#def test_making_the_transformed_imaginary_curves()
+    
+
+
+#def test_making_the_identity_grid()
+    
+
+
+#def test_plot_the_identity_grid()
+    
+
+
+#def test_plot_the_transformed_curves()
+    
+
+
