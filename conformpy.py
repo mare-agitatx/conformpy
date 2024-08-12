@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import inputvalues as IV
-import pytest
+from pytest import approx
 
 
 def merge_lists_into_a_list_of_tuples(list1, list2):
@@ -153,8 +153,8 @@ if __name__ == "__main__":
     
 ###############################################################################
 def test_merge_lists_into_a_list_of_tuples():
-    list1, list2 = [1, 2, 3], [4, 5, 6]
-    tuples_list = [(1, 4), (2, 5), (3, 6)]
+    list1, list2 = [1, 2, 'a'], [4, 5, 'b']
+    tuples_list = [(1, 4), (2, 5), ('a', 'b')]
     assert merge_lists_into_a_list_of_tuples(list1, list2) == tuples_list
 
 
@@ -174,12 +174,20 @@ def test_parametrization():
 
     expected = [reals, imags]
     observed = parametrization(x_list, y_list, complex_formula)
-    assert expected[1][1] == pytest.approx(observed[1][1])
-    assert expected[0][1] == pytest.approx(observed[0][1])
-
-
-#def test_grid_list_maker():
     
+    for i in range(2):
+        for j in range(2):
+            assert expected[i][j] == approx(observed[i][j])
+
+
+def test_grid_list_maker():
+    observed = grid_list_maker(0., 2., .5)
+    expected = np.array([0., 0.5, 1., 1.5, 2.])
+
+    assert type(observed) == type(expected)
+    assert len(observed) == len(expected)
+    for i in range(len(observed)):
+        assert observed[i] == approx(expected[i])
 
 
 #def test_plot_a_2d_curve_given_the_parametrization()
