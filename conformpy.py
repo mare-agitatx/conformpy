@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from inputvalues import *
+import inputvalues as IV
 
 
 def merge_into_a_list_of_tuples(list1, list2):
@@ -14,7 +14,7 @@ def parametrization(x_sequence, y_sequence):
 
     for x_val, y_val in list_of_tuples:
         z = complex(x_val, y_val)
-        w = complex_function_formula(z)
+        w = IV.complex_function_formula(z)
         real_sequence.append(w.real)
         imag_sequence.append(w.imag)
 
@@ -75,21 +75,6 @@ render_sample_size, alpha_value):
     alpha_value)
 
 
-def plot_the_transformed_curves(x_grid, y_grid,
-render_sample_size, alpha_value):
-    ax = plt.axes()
-    ax.set_facecolor("linen")
-    plt.title(GRAPH_TITLE)
-    plt.ylabel('Im(z)')
-    plt.xlabel('Re(z)')
-    if ARE_THE_REAL_CURVES_SHOWN is True:
-        making_the_transformed_real_curves(x_grid, y_grid,
-        render_sample_size, alpha_value)
-    if ARE_THE_IMAGINARY_CURVES_SHOWN is True:
-        making_the_transformed_imaginary_curves(x_grid, y_grid,
-        render_sample_size, alpha_value)
-
-
 # plotting the cartesian grid that is fed as input for the transformed curves,
 # in order to have a reference for the conformal maps' transformation;
 # last lines and first lines are outside the for cycle in order to let
@@ -124,16 +109,33 @@ def plot_the_identity_grid(x_grid, y_grid, alpha_value):
     making_the_identity_grid(x_grid, y_grid, alpha_value)
 
 
+def plot_the_transformed_curves(x_grid, y_grid,
+render_sample_size, alpha_value):
+    ax = plt.axes()
+    ax.set_facecolor("linen")
+    plt.title(IV.GRAPH_TITLE)
+    plt.ylabel('Im(z)')
+    plt.xlabel('Re(z)')
+    if IV.ARE_THE_REAL_CURVES_SHOWN is True:
+        making_the_transformed_real_curves(x_grid, y_grid,
+        render_sample_size, alpha_value)
+    if IV.ARE_THE_IMAGINARY_CURVES_SHOWN is True:
+        making_the_transformed_imaginary_curves(x_grid, y_grid,
+        render_sample_size, alpha_value)
+
+
 ###############################################################################
 if __name__ == "__main__":
-    x_grid_list = grid_list_maker(X_GRID_START, X_GRID_STOP, X_GRID_STEP)
-    y_grid_list = grid_list_maker(Y_GRID_START, Y_GRID_STOP, Y_GRID_STEP)
+    x_grid_list = grid_list_maker(IV.X_GRID_START,
+    IV.X_GRID_STOP, IV.X_GRID_STEP)
+    y_grid_list = grid_list_maker(IV.Y_GRID_START,
+    IV.Y_GRID_STOP, IV.Y_GRID_STEP)
     plt.figure(1)
     plot_the_transformed_curves(x_grid_list, y_grid_list,
-    RENDER_SAMPLE_SIZE, ALPHA_VALUE)
+    IV.RENDER_SAMPLE_SIZE, IV.ALPHA_VALUE)
 
-    if IS_THE_IDENTITY_GRID_SHOWN is True:
+    if IV.IS_THE_IDENTITY_GRID_SHOWN is True:
         plt.figure(2)
-        plot_the_identity_grid(x_grid_list, y_grid_list, ALPHA_VALUE)
+        plot_the_identity_grid(x_grid_list, y_grid_list, IV.ALPHA_VALUE)
 
     plt.show()
