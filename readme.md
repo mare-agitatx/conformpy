@@ -1,4 +1,6 @@
-Welcome
+## ConformPy
+
+# Welcome
 
 This is my code for representing the graphs of complex functions by means of
 the conformal map representation
@@ -14,3 +16,9 @@ state...
 I am still practicing how to commit code here and how to properly debug
 and then test, I will soon test this code, fix the documentation and make
 this code robust
+
+# Dependencies
+
+# Installation
+
+# Usage
