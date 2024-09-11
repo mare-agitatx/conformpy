@@ -13,9 +13,9 @@ def parametrization(x_sequence, y_sequence, complex_formula):
     '''
 
     real_sequence, imag_sequence = [], []
-    list_of_tuples = merge_lists_into_a_list_of_tuples(x_sequence, y_sequence)
+    xy_points_list = merge_lists_into_a_list_of_tuples(x_sequence, y_sequence)
 
-    for x_val, y_val in list_of_tuples:
+    for x_val, y_val in xy_points_list:
         z = complex(x_val, y_val)
         w = complex_formula(z)
         real_sequence.append(w.real)
@@ -25,6 +25,8 @@ def parametrization(x_sequence, y_sequence, complex_formula):
 
 
 def grid_list_maker(start, stop, step):
+    '''
+    '''
     grid_list_values = np.arange(start, stop + step, step)
     return grid_list_values
 
@@ -33,7 +35,6 @@ def plot_a_2d_curve_given_the_parametrization(x_sequence, y_sequence,
 plot_color, plot_alpha):
     '''
     '''
-    
     curve = parametrization(x_sequence, y_sequence,
     IV.complex_function_formula)
     real_values = curve[0]
@@ -89,7 +90,7 @@ render_sample_size, alpha_value):
 def making_the_identity_grid(x_grid, y_grid, alpha_value):
     '''
     '''
-    
+
     x_minimum, x_maximum = x_grid[0], x_grid[-1]
     y_minimum, y_maximum = y_grid[0], y_grid[-1]
 
@@ -111,6 +112,8 @@ def making_the_identity_grid(x_grid, y_grid, alpha_value):
 
 
 def plot_the_identity_grid(x_grid, y_grid, alpha_value):
+    '''
+    '''
     ax = plt.axes()
     ax.set_facecolor("linen")
     plt.title('The original grid, f(z) = z')
@@ -121,6 +124,8 @@ def plot_the_identity_grid(x_grid, y_grid, alpha_value):
 
 def plot_the_transformed_curves(x_grid, y_grid,
 render_sample_size, alpha_value):
+    '''
+    '''
     ax = plt.axes()
     ax.set_facecolor("linen")
     plt.title(IV.GRAPH_TITLE)
