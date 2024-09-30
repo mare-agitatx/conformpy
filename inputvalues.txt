@@ -1,0 +1,16 @@
+[parameters]
+x_grid_start = -10
+x_grid_stop = 10
+x_grid_step = 2
+y_grid_start = -10
+y_grid_stop = 10
+y_grid_step = 2
+render_sample_size = 2000
+is_the_ident_grid_shown = False
+are_the_real_curves_shown = True
+are_the_imag_curves_shown = True
+alpha_value = 0.75
+graph_title = f(z) = 1/(z^3)
+
+[function]
+f_z = ((1/z)**3)
