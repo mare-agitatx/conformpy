@@ -19,6 +19,17 @@ this code robust
 
 ## Dependencies
 
+matplotlib, numpy, sys, configparser for conformpy.py
+
+everything listed for conformpy.py and pytest for tests.py
+
 ## Installation
 
+Just clone the repository
+
 ## Usage
+
+As an example, suppose your configuration file is "config.txt"; you could run:
+```
+python conformpy.py config.txt
+```
